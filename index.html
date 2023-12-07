@@ -1,0 +1,32 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual and Auditory Vigilance Test</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <label for="test-mode">Select Test Mode:</label>
+    <select id="test-mode">
+        <option value="visual">Visual</option>
+        <option value="auditory">Auditory</option>
+    </select>
+
+    <div id="visual-section" class="centered-section">
+        <div id="visual-box" class="stimulus-box" onclick="recordVisualResponse()"></div>
+        <p>Click the button below to begin the visual test!</p>
+        <button id="start-visual-button" onclick="startVisualTest()">Start Visual Test</button>
+    </div>
+
+    <div id="auditory-section" class="centered-section" style="display: none;">
+        <div id="auditory-box" class="stimulus-box" onclick="recordAuditoryResponse()"></div>
+        <p>Click the button below to begin the auditory test!</p>
+        <audio id="auditory-audio" src="audio.mp3"></audio>
+        <button id="start-auditory-button" onclick="startAuditoryTest()">Start Auditory Test</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
