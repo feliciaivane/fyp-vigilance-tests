@@ -12,7 +12,8 @@ Welcome to the Visual and Auditory Vigilance Test project! This web application 
 
 ## Introduction
 The **Visual and Auditory Vigilance Test** project aims to assess users' vigilance through two different types of tests. The visual test involves detecting changes in the appearance of a box, while the auditory test involves responding to audio stimuli.
-DEPLOYED WEBSITE CAN BE ACCESSED THROUGH THIS LINK: https://vigilancetests.netlify.app
+
+**DEPLOYED WEBSITE CAN BE ACCESSED THROUGH THIS LINK: https://vigilancetests.netlify.app**
 
 
 ## Features
