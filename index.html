@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual and Auditory Vigilance Test</title>
+    <title>Visual, Auditory, and Combined Vigilance Test</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
@@ -12,6 +12,7 @@
     <select id="test-mode">
         <option value="visual">Visual</option>
         <option value="auditory">Auditory</option>
+        <option value="combined">Combined</option>
     </select>
 
     <div id="visual-section" class="centered-section">
@@ -25,6 +26,13 @@
         <p>Click the button below to begin the auditory test!</p>
         <audio id="auditory-audio" src="audio.mp3"></audio>
         <button id="start-auditory-button" onclick="startAuditoryTest()">Start Auditory Test</button>
+    </div>
+
+    <div id="combined-section" class="centered-section" style="display: none;">
+        <div id="combined-box" class="stimulus-box" onclick="recordCombinedResponse()"></div>
+        <p>Click the button below to begin the combined test!</p>
+        <audio id="combined-audio" src="audio.mp3"></audio>
+        <button id="start-combined-button" onclick="startCombinedTest()">Start Combined Test</button>
     </div>
 
     <script src="script.js"></script>

@@ -1,7 +1,7 @@
 // script.js
 
-let visualFalseStarts = 0, auditoryFalseStarts = 0;
-let visualResponses = 0, auditoryResponses = 0;
+let visualFalseStarts = 0, auditoryFalseStarts = 0, combinedFalseStarts = 0;
+let visualResponses = 0, auditoryResponses = 0, combinedResponses = 0;
 let visualStartTime, visualEndTime, visualInterval;
 let visualIntervalTotal = 0;
 let visualTestRunning = false;
@@ -9,6 +9,10 @@ let auditoryStartTime, auditoryEndTime, auditoryInterval;
 let auditoryIntervalTotal = 0;
 let auditoryTestRunning = false;
 let audioPlaying = false;
+let combinedStartTime, combinedEndTime, combinedInterval;
+let combinedIntervalTotal = 0;
+let combinedTestRunning = false;
+let combinedAudioPlaying = false;
 
 // Visual Test Functions
 function showVisualStimulus() {
@@ -117,18 +121,97 @@ function startAuditoryTest() {
     document.getElementById('start-auditory-button').style.display = 'none';
 }
 
-// Function to toggle between visual and auditory sections
+// Combined Test Functions
+function showCombinedStimulus() {
+    document.getElementById('combined-box').style.backgroundColor = 'red';
+    combinedStartTime = new Date().getTime();
+}
+
+function playCombinedStimulus() {
+    let audio = document.getElementById('combined-audio');
+    combinedAudioPlaying = true;
+    audio.play();
+    combinedStartTime = new Date().getTime();
+}
+
+function hideCombinedStimulus() {
+    combinedAudioPlaying = false;
+    document.getElementById('combined-box').style.backgroundColor = '#ccc';
+    let audio = document.getElementById('combined-audio');
+    audio.pause();
+    audio.currentTime = 0; // Reset audio to the beginning
+    setTimeout(() => {
+        if (combinedTestRunning) {
+            if (Math.random() < 0.5) {
+                showCombinedStimulus();
+            } else {
+                playCombinedStimulus();
+            }
+        }
+    }, Math.random() * 6000 + 1000); // Random time between 1-7 seconds
+}
+
+function recordCombinedResponse() {
+    if (document.getElementById('combined-box').style.backgroundColor === 'red' || combinedAudioPlaying) {
+        // Valid response
+        combinedResponses++;
+        combinedEndTime = new Date().getTime();
+        combinedInterval = combinedEndTime - combinedStartTime;
+        combinedIntervalTotal += combinedInterval;
+        hideCombinedStimulus(); // Hide the combined stimulus only when the user clicks the button
+    } else {
+        // False start
+        combinedFalseStarts++;
+    }
+}
+
+function startCombinedTest() {
+    // Reset counters and flags
+    combinedFalseStarts = 0;
+    combinedResponses = 0;
+    combinedIntervalTotal = 0;
+    combinedTestRunning = true;
+
+    // After 2 minutes, display the results
+    setTimeout(() => {
+        combinedTestRunning = false; // Stop the combined test
+        alert(`Combined Test Results:
+        Average Response Time: ${combinedResponses > 0 ? combinedIntervalTotal / combinedResponses : 0}
+        Number of False Starts: ${combinedFalseStarts}`);
+    }, 120000);
+
+    // Start the tests
+    setTimeout(() => {
+        if (Math.random() < 0.5) {
+            showCombinedStimulus();
+        } else {
+            playCombinedStimulus();
+        }
+    }, Math.random() * 2000 + 1000); // Random time between 1-3 seconds
+
+    // Hide the start button after it's clicked
+    document.getElementById('start-combined-button').style.display = 'none';
+}
+
+// Function to toggle between visual, auditory, and combined sections
 function toggleTestMode() {
     const modeSelect = document.getElementById('test-mode');
     const visualSection = document.getElementById('visual-section');
     const auditorySection = document.getElementById('auditory-section');
+    const combinedSection = document.getElementById('combined-section');
 
     if (modeSelect.value === 'visual') {
         visualSection.style.display = 'block';
         auditorySection.style.display = 'none';
+        combinedSection.style.display = 'none';
     } else if (modeSelect.value === 'auditory') {
         visualSection.style.display = 'none';
         auditorySection.style.display = 'block';
+        combinedSection.style.display = 'none';
+    } else if (modeSelect.value === 'combined') {
+        visualSection.style.display = 'none';
+        auditorySection.style.display = 'none';
+        combinedSection.style.display = 'block';
     }
 }
 
